@@ -42,6 +42,16 @@ def run_analyst(items: List[SourceItem]) -> List[Insight]:
     
     # 3. 逐条分析（实际工程中可以使用 asyncio.gather 并行处理提升效率）
     for item in items:
+        metadata_lines = []
+        if item.published_at:
+            metadata_lines.append(f"发布时间：{item.published_at}")
+        if item.category:
+            metadata_lines.append(f"分类：{item.category}")
+
+        metadata_block = "\n".join(metadata_lines)
+        if metadata_block:
+            metadata_block += "\n"
+
         messages = [
             SystemMessage(
                 content=(
@@ -59,6 +69,7 @@ def run_analyst(items: List[SourceItem]) -> List[Insight]:
                     "- keywords: 字符串数组\n"
                     "- reasoning: 值得关注的原因\n\n"
                     f"输入标题：{item.title}\n"
+                    f"{metadata_block}"
                     f"输入内容：{item.content}"
                 )
             ),

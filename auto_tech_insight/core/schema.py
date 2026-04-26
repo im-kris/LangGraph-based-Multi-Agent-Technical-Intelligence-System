@@ -1,20 +1,24 @@
-from pydantic import BaseModel, Field
 from typing import List
+
+from pydantic import BaseModel, Field
 
 
 class SourceItem(BaseModel):
-    """单条原始技术信息模型"""
-    title: str = Field(default="", description="原始信息标题")
-    url: str = Field(default="", description="来源链接")
-    content: str = Field(default="", description="原始内容")
+    """Single raw research item."""
+
+    title: str = Field(default="", description="Source title")
+    url: str = Field(default="", description="Source link")
+    content: str = Field(default="", description="Source summary or abstract")
+    published_at: str = Field(default="", description="Published date in ISO format")
+    category: str = Field(default="", description="arXiv category")
 
 
 class Insight(BaseModel):
-    """单条技术见解的模型"""
-    title: str = Field(description="技术动态的标题")
-    summary: str = Field(description="核心内容的高度凝练总结（100字以内）")
-    impact_level: str = Field(description="影响等级：高/中/低")
-    keywords: List[str] = Field(description="技术关键词标签")
-    reasoning: str = Field(description="为什么这项技术值得关注？它的创新点在哪？")
-    url: str = Field(default="", description="原始来源链接")
-    url: str = Field(description="原始论文链接")
+    """Single structured insight."""
+
+    title: str = Field(description="Insight title")
+    summary: str = Field(description="Concise summary")
+    impact_level: str = Field(description="Impact level: high / medium / low")
+    keywords: List[str] = Field(description="Keywords")
+    reasoning: str = Field(description="Why it matters")
+    url: str = Field(default="", description="Original source link")
